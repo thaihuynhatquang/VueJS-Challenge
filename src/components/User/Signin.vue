@@ -1,8 +1,8 @@
 <template>
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md4>
-        <v-card>
+      <v-flex xs12 sm8 md6>
+        <v-card round>
           <v-toolbar color="#66615B">
             <v-toolbar-title class="white--text">Login</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -36,24 +36,30 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex text-xs-center>
-                    <v-btn color="#66615B" class="white--text" type="submit">
+                    <v-btn round color="#66615B" class="white--text" type="submit">
                       Login
                     </v-btn>
                   </v-flex>
                 </v-layout>
-                <v-layout row>
+                <v-layout row row-wrap>
                   <v-flex text-xs-center>
                     <v-card-text>
                       Don't have an account? <router-link to="/signup">Sign Up Now</router-link>
                     </v-card-text>
                   </v-flex>
                 </v-layout>
-                <v-layout align-center justify-center>
-                  <!-- <v-flex> -->
+                <v-layout>
+                  <v-flex text-xs-center>
+                    <strong>OR</strong>
+                  </v-flex>
+                </v-layout>
+                <v-layout row>
+                  <v-flex text-xs-center>
                     <v-card-text>
-                      OR
+                      SIGN UP WITH
                     </v-card-text>
-                  <!-- </v-flex> -->
+                    <v-btn @click="onGoogleLogin">Google</v-btn>
+                  </v-flex>
                 </v-layout>
               </form>
             </v-container>
@@ -88,6 +94,10 @@
     methods: {
       onSignin () {
         this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
+      },
+      onGoogleLogin () {
+        console.log('Click!')
+        this.$store.dispatch('googleLogin')
       }
     }
   }
