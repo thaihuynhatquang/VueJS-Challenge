@@ -1,10 +1,10 @@
 <template>
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md4>
+      <v-flex xs12 sm8 md6>
         <v-card>
-          <v-toolbar color="#66615B">
-            <v-toolbar-title class="white--text">Create New Account</v-toolbar-title>
+          <v-toolbar dark color="#66615B">
+            <v-toolbar-title>Create New Account</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-card-text>
@@ -47,7 +47,7 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex text-xs-center>
-                    <v-btn color="#66615B" class="white--text" type="submit">
+                    <v-btn dark color="#66615B" type="submit">
                       Sign up
                     </v-btn>
                   </v-flex>
@@ -55,8 +55,21 @@
                 <v-layout row>
                   <v-flex text-xs-center>
                     <v-card-text>
-                      Already have an account? <router-link to="/">Sign In</router-link>
+                      Already have an account? <router-link to="/signin">Sign In</router-link>
                     </v-card-text>
+                  </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex text-xs-center>
+                    <strong>OR</strong>
+                  </v-flex>
+                </v-layout>
+                <v-layout row>
+                  <v-flex text-xs-center>
+                    <v-card-text>
+                      SIGN UP WITH
+                    </v-card-text>
+                    <button-social-login></button-social-login>
                   </v-flex>
                 </v-layout>
               </form>
@@ -70,6 +83,9 @@
 </template>
 
 <script>
+  import Firebase from 'firebase'
+  import ButtonSocialLogin from '../Button/ButtonSocialLogin.vue'
+
   export default {
     data () {
       return {
@@ -78,25 +94,31 @@
         confirmPassword: ''
       }
     },
+    components: {
+      buttonSocialLogin: ButtonSocialLogin
+    },
     computed: {
       comparePasswords () {
         return this.password !== this.confirmPassword ? 'Password does not match' : 'Password matched'
-      },
-      user () {
-        return this.$store.getters.user
-      }
-    },
-    watch: {
-      user (value) {
-        if (value !== null && value !== undefined) {
-          this.$router.push('/home')
-        }
       }
     },
     methods: {
       onSignup () {
-        console.log({email: this.email, password: this.password, confirmPassword: this.confirmPassword})
-        this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
+        Firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => this.$router.replace('dashboard')
+        )
+        .catch(
+          error => {
+            var errorCode = error.code
+            var errorMessage = error.message
+            if (errorCode === 'auth/email-already-in-use') {
+              alert('Error: Email already in use')
+            } else if (errorCode === 'auth/weak-password') {
+              alert('The password is too weak. ' + errorMessage)
+            } else alert(errorMessage)
+          }
+        )
       }
     }
   }

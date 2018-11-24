@@ -3,8 +3,8 @@
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6>
         <v-card round>
-          <v-toolbar color="#66615B">
-            <v-toolbar-title class="white--text">Login</v-toolbar-title>
+          <v-toolbar dark color="#66615B">
+            <v-toolbar-title>Login</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-card-text>
@@ -36,7 +36,7 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex text-xs-center>
-                    <v-btn round color="#66615B" class="white--text" type="submit">
+                    <v-btn dark color="#66615B" type="submit">
                       Login
                     </v-btn>
                   </v-flex>
@@ -56,9 +56,9 @@
                 <v-layout row>
                   <v-flex text-xs-center>
                     <v-card-text>
-                      SIGN UP WITH
+                      LOG IN WITH
                     </v-card-text>
-                    <v-btn @click="onGoogleLogin">Google</v-btn>
+                    <button-social-login></button-social-login>
                   </v-flex>
                 </v-layout>
               </form>
@@ -72,6 +72,9 @@
 </template>
 
 <script>
+  import Firebase from 'firebase'
+  import ButtonSocialLogin from '../Button/ButtonSocialLogin.vue'
+
   export default {
     data () {
       return {
@@ -79,25 +82,27 @@
         password: ''
       }
     },
-    computed: {
-      user () {
-        return this.$store.getters.user
-      }
-    },
-    watch: {
-      user (value) {
-        if (value !== null && value !== undefined) {
-          this.$router.push('/home')
-        }
-      }
+    components: {
+      buttonSocialLogin: ButtonSocialLogin
     },
     methods: {
       onSignin () {
-        this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
-      },
-      onGoogleLogin () {
-        console.log('Click!')
-        this.$store.dispatch('googleLogin')
+        Firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => this.$router.replace('dashboard')
+        )
+        .catch(
+          error => {
+            console.log(error)
+            var errorCode = error.code
+            var errorMessage = error.message
+            if (errorCode === 'auth/user-not-found') {
+              alert('Error: User not found')
+            } else if (errorCode === 'auth/wrong-password') {
+              alert('The password is incorrect')
+            } else alert(errorMessage)
+          }
+        )
       }
     }
   }
