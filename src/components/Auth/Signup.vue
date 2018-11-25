@@ -13,16 +13,16 @@
                   <v-layout row>
                     <v-flex xs12>
                       <v-text-field
-                      name="email" 
-                      label="Email" 
-                      id="email" 
-                      v-model="email"
-                      type="email"
-                      prepend-icon="person"
-                      clearable
-                      :rules="[rules.required, rules.email]"
-                      required>
-                    </v-text-field>
+                        name="email" 
+                        label="Email" 
+                        id="email" 
+                        v-model="email"
+                        type="email"
+                        prepend-icon="person"
+                        clearable
+                        :rules="[rules.required, rules.isEmail]"
+                        required>
+                      </v-text-field>
                     </v-flex>
                   </v-layout>
                   <v-layout row>
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-  import ButtonSocialLogin from '../Button/ButtonSocialLogin.vue'
+  import ButtonSocialLogin from '../UI/ButtonSocialLogin.vue'
   const firebase = require('firebase')
   // Required for side-effects
   require('firebase/firestore')
@@ -105,7 +105,7 @@
         showPassword: false,
         showConfirmPassword: false,
         rules: {
-          email: value => {
+          isEmail: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             return pattern.test(value) || 'Invalid e-mail.'
           },

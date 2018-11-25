@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar fixed dark color="#66615B">
+    <v-toolbar app dark color="#66615B">
       <v-toolbar-title>Master Chart</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn flat to="/signup" v-if="!user">Register</v-btn>

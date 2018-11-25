@@ -20,7 +20,7 @@
                     type="email"
                     prepend-icon="person"
                     clearable
-                    :rules="[rules.required, rules.email]"
+                    :rules="[rules.required, rules.isEmail]"
                     required>
                   </v-text-field>
                   </v-flex>
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-  import ButtonSocialLogin from '../Button/ButtonSocialLogin.vue'
+  import ButtonSocialLogin from '../UI/ButtonSocialLogin.vue'
   const firebase = require('firebase')
   // Required for side-effects
   require('firebase/firestore')
@@ -91,7 +91,7 @@
         confirmPassword: '',
         showPassword: false,
         rules: {
-          email: value => {
+          isEmail: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             return pattern.test(value) || 'Invalid e-mail.'
           },

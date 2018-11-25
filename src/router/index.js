@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Signin from '../components/User/Signin.vue'
-import Signup from '../components/User/Signup.vue'
-import Dashboard from '../components/Dashboard.vue'
+import Signin from '../components/Auth/Signin.vue'
+import Signup from '../components/Auth/Signup.vue'
+import Dashboard from '../components/Dashboard/Dashboard.vue'
 const firebase = require('firebase')
 // Required for side-effects
 require('firebase/firestore')
