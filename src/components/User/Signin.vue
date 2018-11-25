@@ -19,6 +19,8 @@
                     v-model="email"
                     type="email"
                     prepend-icon="person"
+                    clearable
+                    :rules="[rules.required, rules.email]"
                     required>
                   </v-text-field>
                   </v-flex>
@@ -29,8 +31,12 @@
                     label="Password" 
                     id="password" 
                     v-model="password"
-                    type="password"
                     prepend-icon="lock"
+                    hint="At least 6 characters"
+                    :rules="[rules.required, rules.counter]"
+                    :append-icon="showPassword ? 'visibility_off' : 'visibility'"
+                    :type="showPassword ? 'text' : 'password'"
+                    @click:append="showPassword = !showPassword"
                     required>
                   </v-text-field>
                 </v-layout>
@@ -56,7 +62,7 @@
                 <v-layout row>
                   <v-flex text-xs-center>
                     <v-card-text>
-                      LOG IN WITH
+                      <h3>LOG IN WITH</h3>
                     </v-card-text>
                     <button-social-login></button-social-login>
                   </v-flex>
@@ -72,14 +78,26 @@
 </template>
 
 <script>
-  import Firebase from 'firebase'
   import ButtonSocialLogin from '../Button/ButtonSocialLogin.vue'
+  const firebase = require('firebase')
+  // Required for side-effects
+  require('firebase/firestore')
 
   export default {
     data () {
       return {
         email: '',
-        password: ''
+        password: '',
+        confirmPassword: '',
+        showPassword: false,
+        rules: {
+          email: value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Invalid e-mail.'
+          },
+          required: value => !!value || 'Required.',
+          counter: value => value.length >= 6 || 'At least 6 characters'
+        }
       }
     },
     components: {
@@ -87,7 +105,7 @@
     },
     methods: {
       onSignin () {
-        Firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         .then(
           user => this.$router.replace('dashboard')
         )

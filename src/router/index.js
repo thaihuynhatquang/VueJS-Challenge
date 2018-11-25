@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import Signin from '../components/User/Signin.vue'
 import Signup from '../components/User/Signup.vue'
 import Dashboard from '../components/Dashboard.vue'
-import Firebase from 'firebase'
-
+const firebase = require('firebase')
+// Required for side-effects
+require('firebase/firestore')
 Vue.use(Router)
 
 var router = new Router({
@@ -40,7 +41,7 @@ var router = new Router({
 
 router.beforeEach((to, from, next) => {
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  let currentUser = Firebase.auth().currentUser
+  let currentUser = firebase.auth().currentUser
   if (requiresAuth && !currentUser) {
     next('/signin')
   } else if (!requiresAuth && currentUser) {

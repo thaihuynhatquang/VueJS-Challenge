@@ -4,7 +4,7 @@
     <app-header></app-header>
       <v-img
         alt="This is a background"
-        height="840"
+        height="900px"
         :src="require('@/assets/Background.png')"
       >
         <router-view></router-view>

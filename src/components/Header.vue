@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar dark color="#66615B">
+    <v-toolbar fixed dark color="#66615B">
       <v-toolbar-title>Master Chart</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn flat to="/signup" v-if="!user">Register</v-btn>
@@ -9,7 +9,9 @@
 </template>
 
 <script>
-  import Firebase from 'firebase'
+  const firebase = require('firebase')
+  // Required for side-effects
+  require('firebase/firestore')
 
   export default {
     computed: {
@@ -19,7 +21,7 @@
     },
     methods: {
       signOut: function () {
-        Firebase.auth().signOut()
+        firebase.auth().signOut()
           .then(() => {
             this.$router.replace('signin')
           })

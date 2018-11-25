@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Firebase from 'firebase'
+import stocks from './modules/stocks'
+const firebase = require('firebase')
+// Required for side-effects
+require('firebase/firestore')
 
 Vue.use(Vuex)
 
@@ -15,12 +18,15 @@ export const store = new Vuex.Store({
   },
   mutations: {
     setUser: state => {
-      state.user = Firebase.auth().currentUser
+      state.user = firebase.auth().currentUser
     }
   },
   actions: {
     setUser: context => {
       context.commit('setUser')
     }
+  },
+  modules: {
+    stocks
   }
 })

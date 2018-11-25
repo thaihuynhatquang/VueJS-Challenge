@@ -6,13 +6,15 @@
 </template>
 
 <script>
-import Firebase from 'firebase'
+const firebase = require('firebase')
+// Required for side-effects
+require('firebase/firestore')
 
 export default {
   methods: {
     onGoogleLogin () {
-      var provider = new Firebase.auth.GoogleAuthProvider()
-      Firebase.auth().signInWithPopup(provider)
+      var provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithPopup(provider)
         .then(
           user => this.$router.replace('dashboard')
         )
@@ -23,8 +25,8 @@ export default {
         )
     },
     onFacebookLogin () {
-      var provider = new Firebase.auth.FacebookAuthProvider()
-      Firebase.auth().signInWithPopup(provider)
+      var provider = new firebase.auth.FacebookAuthProvider()
+      firebase.auth().signInWithPopup(provider)
           .then(
             user => this.$router.replace('dashboard')
           )
