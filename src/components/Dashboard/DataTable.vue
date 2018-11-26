@@ -3,6 +3,52 @@
     <v-toolbar dark color="#66615B">
       <v-toolbar-title>Data Table</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-dialog v-model="dialog2" max-width="600px">
+        <v-btn slot="activator" color="#66615B" dark class="mb-2">New Data</v-btn>
+        <v-card>
+          <v-toolbar dark color="#66615B">
+            <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
+          </v-toolbar>
+          <v-card-text>
+            <v-container grid-list-md>
+              <form @submit.prevent="save">
+                <v-layout wrap >
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.invoiceNo" label="Invoice Number*" required></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.invoiceDate" label="Invoice Date*" hint="Ex: MM/dd/yyyy HH:mm" :rules="[rules.invoiceDate]" required></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.stockCode" label="Stock Code*" required></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-text-field v-model="editedItem.description" label="Description"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6>
+                    <v-text-field v-model="editedItem.quantity" label="Quantity*" hint="Ex: 12345, -12345" :rules="[rules.quantity]" required></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6>
+                    <v-text-field v-model="editedItem.unitPrice" label="Unit Price*" hint="Ex: 1.23" :rules="[rules.unitPrice]" required></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6>
+                    <v-text-field v-model="editedItem.customerID" label="CustomerID*" required></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6>
+                    <v-text-field v-model="editedItem.country" label="Country*" required></v-text-field>
+                  </v-flex>                                             
+                </v-layout>
+                <v-card-actions>
+                  <v-flex text-xs-center>
+                    <v-btn dark color="#66615B" @click="close">Cancel</v-btn>
+                    <v-btn dark color="#66615B" type="submit">Save</v-btn>
+                  </v-flex>
+                </v-card-actions>
+              </form>
+            </v-container>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
       <v-btn class="white--text" color="#66615B" @click="loadData">
         Reload Data
       </v-btn>
@@ -59,54 +105,7 @@
             </td>
           </template>
         </v-data-table>
-        <v-layout row justify-center>
-          <v-dialog v-model="dialog2" max-width="600px">
-            <v-btn slot="activator" color="#66615B" dark class="mb-2">New Item</v-btn>
-            <v-card>
-              <v-toolbar dark color="#66615B">
-                <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
-              </v-toolbar>
-              <v-card-text>
-                <v-container grid-list-md>
-                  <form @submit.prevent="save">
-                    <v-layout wrap >
-                      <v-flex xs12 sm6 md4>
-                        <v-text-field v-model="editedItem.invoiceNo" label="Invoice Number*" required></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm6 md4>
-                        <v-text-field v-model="editedItem.invoiceDate" label="Invoice Date*" hint="Ex: MM/dd/yyyy HH:mm" :rules="[rules.invoiceDate]" required></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm6 md4>
-                        <v-text-field v-model="editedItem.stockCode" label="Stock Code*" required></v-text-field>
-                      </v-flex>
-                      <v-flex xs12>
-                        <v-text-field v-model="editedItem.description" label="Description"></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm6>
-                        <v-text-field v-model="editedItem.quantity" label="Quantity*" hint="Ex: 12345, -12345" :rules="[rules.quantity]" required></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm6>
-                        <v-text-field v-model="editedItem.unitPrice" label="Unit Price*" hint="Ex: 1.23" :rules="[rules.unitPrice]" required></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm6>
-                        <v-text-field v-model="editedItem.customerID" label="CustomerID*" required></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm6>
-                        <v-text-field v-model="editedItem.country" label="Country*" required></v-text-field>
-                      </v-flex>                                             
-                    </v-layout>
-                    <v-card-actions>
-                      <v-flex text-xs-center>
-                        <v-btn dark color="#66615B" @click="close">Cancel</v-btn>
-                        <v-btn dark color="#66615B" type="submit">Save</v-btn>
-                      </v-flex>
-                    </v-card-actions>
-                  </form>
-                </v-container>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
-        </v-layout>
+        
       </v-card>
     </template>
   </v-flex>
