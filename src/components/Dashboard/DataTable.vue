@@ -2,7 +2,13 @@
   <v-flex>
     <v-toolbar dark color="#66615B">
       <v-toolbar-title>Data Table</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-dialog v-model="dialog1" max-width="500">
+        <v-btn slot="activator" dark color="#66615B">Import database from file</v-btn>
+        <import-database @closeDialog = 'dialog1 = $event' ></import-database>
+      </v-dialog>
     </v-toolbar>
+
     <template>
       <v-card>
         <v-card-title>
@@ -22,7 +28,7 @@
           disable-initial-sort
           :rows-per-page-items="[5, 10]"
         >
-          <template slot="no-data">
+          <template>
             <v-progress-linear :indeterminate="true" color="#66615B"></v-progress-linear>              
           </template>
 
@@ -51,7 +57,7 @@
           </template>
         </v-data-table>
         <v-layout row justify-center>
-          <v-dialog v-model="dialog" max-width="600px">
+          <v-dialog v-model="dialog2" max-width="600px">
             <v-btn slot="activator" color="#66615B" dark class="mb-2">New Item</v-btn>
             <v-card>
               <v-toolbar dark color="#66615B">
@@ -106,10 +112,13 @@
 </template>
 
 <script>
+  import ImportDatabase from './ImportDatabase.vue'
+
   export default {
     data: () => ({
       search: '',
-      dialog: false,
+      dialog1: false,
+      dialog2: false,
       headers: [
         {
           text: 'Invoice Number',
@@ -140,7 +149,7 @@
         {
           text: 'Invoice Date',
           value: 'invoiceDate',
-          width: '11%',
+          width: '20%',
           align: 'center'},
         {
           text: 'Unit Price',
@@ -207,7 +216,6 @@
         }
       }
     }),
-
     computed: {
       formTitle () {
         return this.editedIndex === -1 ? 'New Stock' : 'Edit Stock'
@@ -215,7 +223,10 @@
     },
 
     watch: {
-      dialog (val) {
+      dialog1 (val) {
+        val || this.close()
+      },
+      dialog2 (val) {
         val || this.close()
       }
     },
@@ -224,11 +235,15 @@
       this.$store.dispatch('initStocks')
     },
 
+    components: {
+      importDatabase: ImportDatabase
+    },
+
     methods: {
       editItem (item) {
         this.editedIndex = this.$store.getters.getStocks.indexOf(item)
         this.editedItem = Object.assign({}, item)
-        this.dialog = true
+        this.dialog2 = true
       },
 
       deleteItem (item) {
@@ -238,7 +253,7 @@
 
       close () {
         console.log(this.editedItem)
-        this.dialog = false
+        this.dialog2 = false
         setTimeout(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
