@@ -3,6 +3,9 @@
     <v-toolbar dark color="#66615B">
       <v-toolbar-title>Data Table</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn class="white--text" color="#66615B" @click="loadData">
+        Reload Data
+      </v-btn>
       <v-dialog v-model="dialog1" max-width="500">
         <v-btn slot="activator" dark color="#66615B">Import database from file</v-btn>
         <import-database @closeDialog = 'dialog1 = $event' ></import-database>
@@ -23,12 +26,12 @@
 
         <v-data-table
           :headers="headers"
-          :items=this.$store.getters.getStocks
+          :items="this.$store.getters.getStocks"
           :search="search"
           disable-initial-sort
           :rows-per-page-items="[5, 10]"
         >
-          <template>
+          <template slot="no-data">
             <v-progress-linear :indeterminate="true" color="#66615B"></v-progress-linear>              
           </template>
 
@@ -63,7 +66,6 @@
               <v-toolbar dark color="#66615B">
                 <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
               </v-toolbar>
-
               <v-card-text>
                 <v-container grid-list-md>
                   <form @submit.prevent="save">
@@ -102,7 +104,6 @@
                   </form>
                 </v-container>
               </v-card-text>
-
             </v-card>
           </v-dialog>
         </v-layout>
@@ -116,6 +117,7 @@
 
   export default {
     data: () => ({
+      stocks: [],
       search: '',
       dialog1: false,
       dialog2: false,
@@ -154,7 +156,7 @@
         {
           text: 'Unit Price',
           value: 'unitPrice',
-          with: '9%',
+          withth: '9%',
           align: 'center'},
         {
           text: 'Customer ID',
@@ -232,7 +234,7 @@
     },
 
     created () {
-      this.$store.dispatch('initStocks')
+      this.loadData()
     },
 
     components: {
@@ -240,19 +242,23 @@
     },
 
     methods: {
+      showData () {
+        console.log(this.$store.getters.getStocks)
+      },
+      loadData () {
+        this.$store.dispatch('setStocks', [])
+        this.$store.dispatch('initStocks')
+      },
       editItem (item) {
         this.editedIndex = this.$store.getters.getStocks.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog2 = true
       },
-
       deleteItem (item) {
         this.$store.dispatch('deleteStock', item)
         console.log(this.$store.getters.getStocks)
       },
-
       close () {
-        console.log(this.editedItem)
         this.dialog2 = false
         setTimeout(() => {
           this.editedItem = Object.assign({}, this.defaultItem)

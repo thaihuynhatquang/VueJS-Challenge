@@ -4,8 +4,8 @@ const state = {
 }
 
 const mutations = {
-  'SET_STOCKS' (state) {
-    // state.stocks = stocks
+  'INIT_STOCKS' (state) {
+    console.log(state.stocks)
     firebase.db.collection('stocks').get()
       .then(
         querySnapshot => querySnapshot.forEach(doc => {
@@ -21,12 +21,15 @@ const mutations = {
             country: doc.data().Country
           }
           state.stocks.push(item)
-          console.log(item)
         })
       )
       .catch(
         error => console.log(error)
       )
+  },
+
+  'SET_STOCKS' (state, item) {
+    state.stocks = item
   },
 
   'DELETE_STOCK' (state, item) {
@@ -46,26 +49,35 @@ const mutations = {
   'UPDATE_STOCKS' (state, {editedIndex, editedItem}) {
     console.log(editedItem)
     if (editedIndex > -1) {
+      console.log(editedItem.invoiceNo)
       firebase.db.collection('stocks').doc(editedItem.id).update({
-        invoiceNo: editedItem.invoiceNo,
-        stockCode: editedItem.stockCode,
-        description: editedItem.description,
-        quantity: editedItem.quantity,
-        invoiceDate: editedItem.invoiceDate,
-        unitPrice: editedItem.unitPrice,
-        customerID: editedItem.customerID,
-        country: editedItem.country
+        InvoiceNo: editedItem.invoiceNo,
+        StockCode: editedItem.stockCode,
+        Description: editedItem.description,
+        Quantity: editedItem.quantity,
+        InvoiceDate: editedItem.invoiceDate,
+        UnitPrice: editedItem.unitPrice,
+        CustomerID: editedItem.customerID,
+        Country: editedItem.country
       })
       .then(function () {
         console.log('Document successfully updated!')
+        Object.assign(state.stocks[editedIndex], editedItem)
       })
       .catch(function (error) {
-        // The document probably doesn't exist.
         console.error('Error updating document: ', error)
       })
-      Object.assign(state.stocks[editedIndex], editedItem)
     } else {
-      firebase.db.collection('stocks').add(editedItem)
+      firebase.db.collection('stocks').add({
+        InvoiceNo: editedItem.invoiceNo,
+        StockCode: editedItem.stockCode,
+        Description: editedItem.description,
+        Quantity: editedItem.quantity,
+        InvoiceDate: editedItem.invoiceDate,
+        UnitPrice: editedItem.unitPrice,
+        CustomerID: editedItem.customerID,
+        Country: editedItem.country
+      })
       .then(function (docRef) {
         console.log('Document written with ID: ', docRef.id)
         let newItem = {
@@ -83,7 +95,10 @@ const mutations = {
 
 const actions = {
   initStocks: ({commit}) => {
-    commit('SET_STOCKS')
+    commit('INIT_STOCKS')
+  },
+  setStocks: ({commit}, item) => {
+    commit('SET_STOCKS', item)
   },
   deleteStock: ({commit}, item) => {
     commit('DELETE_STOCK', item)

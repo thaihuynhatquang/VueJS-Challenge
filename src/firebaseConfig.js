@@ -3,12 +3,12 @@ const firebase = require('firebase')
 require('firebase/firestore')
 
 let config = {
-  apiKey: 'AIzaSyAq3FQdzSLUoWXD16rTG52RqqYTYzGMPxs',
-  authDomain: 'case-study-teko.firebaseapp.com',
-  databaseURL: 'https://case-study-teko.firebaseio.com',
-  projectId: 'case-study-teko',
-  storageBucket: 'case-study-teko.appspot.com',
-  messagingSenderId: '611535883029'
+  apiKey: 'AIzaSyB_wUmTzixWr3TjrqtYULOTi0-4uGiiNlg',
+  authDomain: 'master-chart.firebaseapp.com',
+  databaseURL: 'https://master-chart.firebaseio.com',
+  projectId: 'master-chart',
+  storageBucket: 'master-chart.appspot.com',
+  messagingSenderId: '692104320733'
 }
 
 firebase.initializeApp(config)

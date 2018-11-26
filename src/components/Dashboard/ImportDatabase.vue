@@ -5,7 +5,7 @@
       <v-layout>
         <v-flex>
           <v-card-text>
-            <em>Note: File must be have Header with fields</em>
+            <em>Note: File must be have header</em>
           </v-card-text>
         </v-flex>
       </v-layout>
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+const firebase = require('../../firebaseConfig.js')
+
 export default {
   props: {
     dialog: Boolean
@@ -67,11 +69,19 @@ export default {
         headers.map(function (header, indexHeader) {
           obj[header] = currentline[indexHeader]
         })
-        console.log(obj)
         result.push(obj)
       })
-
       result.pop() // remove the last item because undefined values
+      console.log(vm.$store.getters.getStocks)
+      let i
+      for (i in result) {
+        firebase.db.collection('stocks').add(result[i])
+        .then(function (docRef) {
+        })
+        .catch(function (error) {
+          console.error('Error adding document: ', error)
+        })
+      }
       return result // JavaScript object
     },
     loadCSV (e) {
@@ -83,7 +93,6 @@ export default {
         reader.onload = function (event) {
           var csv = event.target.result
           vm.parse_csv = vm.csvJSON(csv)
-          console.log(vm.parse_csv)
         }
         reader.onerror = function (evt) {
           if (evt.target.error.name === 'NotReadableError') {
@@ -93,6 +102,8 @@ export default {
       } else {
         alert('FileReader are not supported in this browser.')
       }
+      this.$store.dispatch('setStocks', [])
+      this.$store.dispatch('initStocks')
     }
   }
 }
