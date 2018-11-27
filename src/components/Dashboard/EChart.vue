@@ -1,6 +1,12 @@
 <template>
   <v-card>
-    <e-chart :options="polar"/>
+    <v-container>
+      <v-layout row wrap>
+        <v-flex text-xs-center>
+          <e-chart :options="polar"/>
+        </v-flex>
+      </v-layout>
+      </v-container>
   </v-card>
 </template>
 
@@ -14,15 +20,21 @@ import 'echarts/lib/component/legend'
 import 'echarts/lib/component/title'
 
 export default {
+  // mounted () {
+  //   this.chart = this.$store.getters.getDatachart
+  //   console.log(this.chart)
+  // },
   props: {
     dataChart: Array
   },
+
   components: {
     'e-chart': ECharts
   },
   data () {
+    let chart = this.dataChart
+    console.log(chart)
     return {
-      data: this.dataChart,
       polar: {
         title: {
           text: 'CHART',
@@ -31,17 +43,15 @@ export default {
         },
         tooltip: {
           trigger: 'item',
-          formatter: '{a} <br/>{b}: {c} invoices ({d}%)'
+          formatter: '{b}: {c} invoices ({d}%)'
         },
         legend: {
-          data: this.dataChart
+          data: chart
         },
         series: [{
           name: 'Country',
           type: 'pie',
-          radius: '55%',
-          center: ['50%', '50%'],
-          data: this.dataChart,
+          data: chart,
           itemStyle: {
             emphasis: {
               shadowBlur: 10,

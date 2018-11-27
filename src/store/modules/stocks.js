@@ -1,11 +1,10 @@
 const firebase = require('../../firebaseConfig.js')
 const state = {
-  stocks: []
+  stocks: [{}]
 }
 
 const mutations = {
   'INIT_STOCKS' (state) {
-    console.log(state.stocks)
     firebase.db.collection('stocks').get()
       .then(
         querySnapshot => querySnapshot.forEach(doc => {
@@ -92,7 +91,6 @@ const mutations = {
     }
   }
 }
-
 const actions = {
   initStocks: ({commit}) => {
     commit('INIT_STOCKS')

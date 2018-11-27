@@ -232,7 +232,7 @@
       }
     },
 
-    created () {
+    mounted () {
       this.loadData()
     },
 
@@ -241,9 +241,6 @@
     },
 
     methods: {
-      showData () {
-        console.log(this.$store.getters.getStocks)
-      },
       loadData () {
         this.$store.dispatch('setStocks', [])
         this.$store.dispatch('initStocks')
