@@ -72,7 +72,6 @@ export default {
         result.push(obj)
       })
       result.pop() // remove the last item because undefined values
-      console.log(vm.$store.getters.getStocks)
       let i
       for (i in result) {
         firebase.db.collection('stocks').add(result[i])
@@ -104,6 +103,7 @@ export default {
       }
       this.$store.dispatch('setStocks', [])
       this.$store.dispatch('initStocks')
+      this.$emit('showSnackbar', 'Import file successully')
     }
   }
 }

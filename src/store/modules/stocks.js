@@ -32,17 +32,15 @@ const mutations = {
   },
 
   'DELETE_STOCK' (state, item) {
-    if (confirm('Are you sure you want to delete this item?') === true) {
-      firebase.db.collection('stocks').doc(item.id).delete()
-        .then(function () {
-          console.log('Document successfully deleted!')
-        })
-        .catch(function (error) {
-          console.error('Error removing document: ', error)
-        })
-      let index = state.stocks.indexOf(item)
-      state.stocks.splice(index, 1)
-    }
+    firebase.db.collection('stocks').doc(item.id).delete()
+      .then(function () {
+        console.log('Document successfully deleted!')
+      })
+      .catch(function (error) {
+        console.error('Error removing document: ', error)
+      })
+    let index = state.stocks.indexOf(item)
+    state.stocks.splice(index, 1)
   },
 
   'UPDATE_STOCKS' (state, {editedIndex, editedItem}) {

@@ -54,6 +54,7 @@ export default {
   white-space: nowrap;
   font-size: 16px;
   color: #FFF;
+  width: 212px;
 }
 .loginBtn:before {
   content: "";

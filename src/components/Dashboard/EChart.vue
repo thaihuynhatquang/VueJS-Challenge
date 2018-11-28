@@ -1,9 +1,9 @@
 <template>
   <v-card>
     <v-container>
-      <v-layout row wrap>
-        <v-flex text-xs-center>
-          <e-chart :options="polar"/>
+      <v-layout>
+        <v-flex>
+          <e-chart :options="data"/>
         </v-flex>
       </v-layout>
       </v-container>
@@ -20,10 +20,6 @@ import 'echarts/lib/component/legend'
 import 'echarts/lib/component/title'
 
 export default {
-  // mounted () {
-  //   this.chart = this.$store.getters.getDatachart
-  //   console.log(this.chart)
-  // },
   props: {
     dataChart: Array
   },
@@ -35,30 +31,30 @@ export default {
     let chart = this.dataChart
     console.log(chart)
     return {
-      polar: {
-        title: {
-          text: 'CHART',
-          x: 'center',
-          bottom: 'bottom'
-        },
+      data: {
         tooltip: {
           trigger: 'item',
           formatter: '{b}: {c} invoices ({d}%)'
         },
         legend: {
+          orient: 'vertical',
+          right: 'right',
           data: chart
         },
         series: [{
           name: 'Country',
           type: 'pie',
           data: chart,
+          radius: '55%',
+          center: ['50%', '60%'],
           itemStyle: {
             emphasis: {
               shadowBlur: 10,
               shadowOffsetX: 0,
               shadowColor: 'rgba(0, 0, 0, 0.5)'
             }
-          }
+          },
+          animationDuration: 4000
         }]
       }
     }

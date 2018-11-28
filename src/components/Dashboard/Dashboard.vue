@@ -4,9 +4,17 @@
       <data-table></data-table>
     </v-layout>
     <v-layout fluid justify-space-around>
-      <v-dialog v-model="dialog" max-width="800px">
+      <v-dialog v-model="dialog" max-width="700px">
         <v-btn slot="activator" color="#66615B" dark class="mb-2" @click='showChart'>Show E-Chart about Invoices of Countries</v-btn>
+        <v-toolbar dark color="#66615B">
+            <v-toolbar-title>Chart</v-toolbar-title>
+          </v-toolbar>
         <e-chart :key="key" :dataChart="dataChart"></e-chart>
+         <v-card>
+          <v-flex text-xs-center>
+            <v-btn color="#66615B" dark @click="dialog=false">Close</v-btn>
+          </v-flex>
+        </v-card>
       </v-dialog>
     </v-layout>  
   </v-container>

@@ -13,11 +13,6 @@ import Header from './components/UI/Header.vue'
 import Footer from './components/UI/Footer.vue'
 
 export default {
-
-  data () {
-    return {
-    }
-  },
   components: {
     appHeader: Header,
     appFooter: Footer
@@ -32,8 +27,7 @@ export default {
     // this uses Vuex to check if a user is signed in
     // check out mutations in the store.js file
     this.setUser()
-  },
-  name: 'App'
+  }
 }
 </script>
 <<style>
