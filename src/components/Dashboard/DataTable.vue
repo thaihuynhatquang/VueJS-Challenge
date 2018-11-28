@@ -1,7 +1,7 @@
 <template>
   <v-flex>
     <v-toolbar dark color="#66615B">
-      <v-toolbar-title>Data Table</v-toolbar-title>
+      <v-toolbar-title v-if="$vuetify.breakpoint.width > 620">Data Table</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog.dialog2" max-width="600px">
         <v-btn slot="activator" color="#66615B" dark class="mb-2">New Data</v-btn>
@@ -55,7 +55,7 @@
         Reload Data
       </v-btn>
       <v-dialog v-model="dialog.dialog1" max-width="500">
-        <v-btn slot="activator" dark color="#66615B">Import database from file</v-btn>
+        <v-btn slot="activator" dark color="#66615B">Import from file</v-btn>
         <import-database @closeDialog='dialog.dialog1=$event' @showSnackbar='showSnackbar($event)'></import-database>
       </v-dialog>
     </v-toolbar>
