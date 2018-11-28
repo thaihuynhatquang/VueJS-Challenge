@@ -72,8 +72,7 @@
           </v-card-text>
         </v-card>
       </v-flex>
-  </v-layout>
-    </v-slide-y-transition>
+    </v-layout>
   </v-container>
 </template>
 

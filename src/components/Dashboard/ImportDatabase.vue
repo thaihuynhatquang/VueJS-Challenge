@@ -43,12 +43,6 @@ export default {
       this.dialog = false
       this.$emit('closeDialog', this.dialog)
     },
-    onFocus () {
-      if (!this.disabled) {
-        debugger
-        this.$refs.fileInput.click()
-      }
-    },
     sortBy: function (key) {
       var vm = this
       vm.sortKey = key
