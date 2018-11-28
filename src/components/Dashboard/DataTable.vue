@@ -55,7 +55,7 @@
         Reload Data
       </v-btn>
       <v-dialog v-model="dialog.dialog1" max-width="500">
-        <v-btn slot="activator" dark color="#66615B">Import from file</v-btn>
+        <v-btn slot="activator" dark color="#66615B">Import file</v-btn>
         <import-database @closeDialog='dialog.dialog1=$event' @showSnackbar='showSnackbar($event)'></import-database>
       </v-dialog>
     </v-toolbar>

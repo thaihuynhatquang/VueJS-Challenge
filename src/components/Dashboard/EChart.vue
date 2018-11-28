@@ -1,12 +1,10 @@
 <template>
   <v-card>
-    <v-container>
-      <v-layout>
-        <v-flex>
-          <e-chart :options="data"/>
-        </v-flex>
-      </v-layout>
-      </v-container>
+    <v-layout justify-center column>
+      <v-flex align-center justify-space-between column fill-height>
+        <e-chart :options="pie"/>
+      </v-flex>
+    </v-layout>
   </v-card>
 </template>
 
@@ -29,23 +27,20 @@ export default {
   },
   data () {
     let chart = this.dataChart
-    console.log(chart)
     return {
-      data: {
+      pie: {
         tooltip: {
           trigger: 'item',
           formatter: '{b}: {c} invoices ({d}%)'
         },
         legend: {
-          orient: 'vertical',
-          right: 'right',
           data: chart
         },
         series: [{
           name: 'Country',
           type: 'pie',
           data: chart,
-          radius: '55%',
+          radius: '45%',
           center: ['50%', '60%'],
           itemStyle: {
             emphasis: {
@@ -54,7 +49,7 @@ export default {
               shadowColor: 'rgba(0, 0, 0, 0.5)'
             }
           },
-          animationDuration: 4000
+          animationDuration: 3000
         }]
       }
     }

@@ -1,21 +1,27 @@
 <template>
-  <v-container fluid justify-center>
-    <v-layout align-center>
-      <data-table></data-table>
-    </v-layout>
-    <v-layout fluid justify-space-around>
-      <v-dialog v-model="dialog" max-width="700px">
-        <v-btn slot="activator" color="#66615B" dark class="mb-2" @click='showChart'>Show E-Chart about Invoices of Countries</v-btn>
-        <v-toolbar dark color="#66615B">
-            <v-toolbar-title>Chart</v-toolbar-title>
-          </v-toolbar>
-        <e-chart :key="key" :dataChart="dataChart"></e-chart>
-         <v-card>
-          <v-flex text-xs-center>
-            <v-btn color="#66615B" dark @click="dialog=false">Close</v-btn>
+  <v-container text-xs-center>
+    <v-layout align-center justify-space-between column fill-height>
+      <v-flex xl12>
+        <data-table></data-table>
+      </v-flex>
+      <v-flex lg6>
+        <v-layout align-center justify-space-between column fill-height>
+          <v-flex>
+            <v-layout>
+                <v-dialog v-model="dialog" min-width="600px" width="600px">
+                  <v-toolbar dark color="#66615B">
+                    <v-toolbar-title>Chart</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-icon @click="dialog=false">close</v-icon>
+                  </v-toolbar>
+                  <v-btn slot="activator" color="#66615B" dark @click="showChart">Show E-Chart about Invoices of Countries</v-btn>
+                  <e-chart :key="key" :dataChart="dataChart">
+                  </e-chart>
+                </v-dialog>
+            </v-layout>
           </v-flex>
-        </v-card>
-      </v-dialog>
+        </v-layout>
+      </v-flex>
     </v-layout>  
   </v-container>
 </template>

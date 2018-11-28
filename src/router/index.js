@@ -35,8 +35,7 @@ var router = new Router({
       meta: {
         requiresAuth: true
       }
-    }],
-  mode: 'history'
+    }]
 })
 
 router.beforeEach((to, from, next) => {
