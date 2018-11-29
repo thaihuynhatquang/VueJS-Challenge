@@ -29,6 +29,7 @@
 <script>
   import DataTable from './DataTable.vue'
   import EChart from './EChart.vue'
+
   import _ from 'lodash'
   
   export default {
@@ -66,7 +67,6 @@
           })
           index++
         }
-        console.log(this.dataChart)
       }
     }
   }

@@ -58,6 +58,10 @@
         <v-btn slot="activator" dark color="#66615B">Import file</v-btn>
         <import-database @closeDialog='dialog.dialog1=$event' @showSnackbar='showSnackbar($event)'></import-database>
       </v-dialog>
+      <v-dialog v-model="dialog.dialog3" max-width="500">
+        <v-btn slot="activator" @click="exportDatatable" dark color="#66615B">Download Datatable</v-btn>
+        <export-database :key="keyRender"></export-database>
+      </v-dialog>
     </v-toolbar>
     <template>
       <v-card>
@@ -94,17 +98,19 @@
 
 <script>
   import ImportDatabase from './ImportDatabase.vue'
+  import ExportDatabase from './ExportDatabase.vue'
   import listCountry from '../../data/countries'
   import headers from '../../data/headerData.js'
 
   export default {
     data () {
       return {
-        stocks: [],
         search: '',
+        keyRender: 0,
         dialog: {
           dialog1: false,
-          dialog2: false
+          dialog2: false,
+          dialog3: false
         },
         snackbar: {
           value: false,
@@ -148,16 +154,19 @@
       },
       dialog2 (val) {
         val || this.close()
+      },
+      dialog3 (val) {
+        val || this.close()
       }
     },
 
     mounted () {
       this.loadData()
-      console.log(this.$store.getters.getUser)
     },
 
     components: {
-      importDatabase: ImportDatabase
+      importDatabase: ImportDatabase,
+      exportDatabase: ExportDatabase
     },
 
     methods: {
@@ -201,6 +210,9 @@
         this.$store.dispatch('updateStocks', item)
         this.close()
         console.log(this.$store.getters.getStocks.length)
+      },
+      exportDatatable () {
+        this.keyRender++
       }
     }
   }
