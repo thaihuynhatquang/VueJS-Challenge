@@ -60,7 +60,7 @@
       </v-dialog>
       <v-dialog v-model="dialog.dialog3" max-width="500">
         <v-btn slot="activator" @click="exportDatatable" dark color="#66615B">Download Datatable</v-btn>
-        <export-database :key="keyRender"></export-database>
+        <export-database @closeDialog='dialog.dialog3=$event':key="keyRender"></export-database>
       </v-dialog>
     </v-toolbar>
     <template>

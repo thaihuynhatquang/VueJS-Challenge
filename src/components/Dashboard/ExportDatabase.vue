@@ -19,6 +19,7 @@
       </v-layout> 
       <v-layout>
         <v-flex>
+          <v-btn dark color="#66615B" @click="closeDialog" class="mb-2">Cancel</v-btn>
           <download-data :data="data" :fields="header" :type="type">
               Download Data
           </download-data>
@@ -32,6 +33,9 @@
 import DownloadData from 'vue-json-excel'
 
 export default {
+  props: {
+    dialog: Boolean
+  },
   data () {
     let datatable = this.$store.getters.getStocks
     return {
@@ -47,6 +51,12 @@ export default {
         'Country': 'country',
         'CustomerID': 'customerID'
       }
+    }
+  },
+  methods: {
+    closeDialog () {
+      this.dialog = false
+      this.$emit('closeDialog', this.dialog)
     }
   },
   components: {
